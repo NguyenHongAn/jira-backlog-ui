@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Topbar from "../../components/Topbar/Topbar";
+import Column from "../../components/Column/Column";
 
 const DRAFT_COLUMNS = {
   "PROJ-101-0": {
@@ -79,13 +80,22 @@ const DRAFT_COLUMNS = {
 
 const BoardPage = (props) => {
   const [columns, setColumns] = useState(DRAFT_COLUMNS);
+  const [showNewCardFormOpen, setShowNewCardFormOpen] = useState(null);
 
   return (
     <div className="min-h-screen bg-gray-50 min-w-screen">
       <Topbar />
       <div className="p-6">
         <div className="flex space-x-6 overflow-x-auto pb-6">
-          {Object.values(columns).map((column) => {})}
+          {Object.values(columns).map((column) => {
+            return (
+              <Column
+                key={column.id}
+                columnData={column}
+                setShowNewCardFormOpen={setShowNewCardFormOpen}
+              />
+            );
+          })}
         </div>
       </div>
     </div>
