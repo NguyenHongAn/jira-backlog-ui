@@ -3,7 +3,16 @@ import classNames from "classnames";
 import { Plus, X } from "lucide-react";
 import JiraCard from "../JiraCard/JiraCard";
 
-const Column = ({ columnData, className, rootClassName, setShowNewCardFormOpen, deleteColumn }) => {
+const Column = ({
+  columnData,
+  className,
+  rootClassName,
+  setShowNewCardFormOpen,
+  deleteColumn,
+  handleDragStart,
+  handleDragOver,
+  handleDrop
+}) => {
   const classes = classNames(rootClassName || "flex-shrink-0 min-w-80", className);
   const { id, color, title, cards } = columnData;
 
@@ -35,9 +44,13 @@ const Column = ({ columnData, className, rootClassName, setShowNewCardFormOpen, 
             </div>
           </div>
         </div>
-        <div className="p-4 min-h-[400px] bg-gray-50">
+        <div
+          className="p-4 min-h-[400px] bg-gray-50"
+          onDragOver={handleDragOver}
+          onDrop={(e) => handleDrop(e, id)}
+        >
           {cards.map((card) => (
-            <JiraCard key={card.id} card={card} columnId={id} />
+            <JiraCard key={card.id} card={card} columnId={id} handleDragStart={handleDragStart} />
           ))}
           {cards.length === 0 && (
             <div className="text-center text-gray-500 py-8">

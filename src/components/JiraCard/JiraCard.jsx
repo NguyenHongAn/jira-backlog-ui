@@ -1,10 +1,9 @@
 import classNames from "classnames";
-import React from "react";
 import { Flag, Trash2, User } from "lucide-react";
 
 import { getCardTypeColor, getPriorityColor } from "../../utils/ui";
 
-const JiraCard = ({ className, rootClassName, card, columnId, deleteCard }) => {
+const JiraCard = ({ className, rootClassName, card, columnId, deleteCard, handleDragStart }) => {
   const classes = classNames(
     rootClassName ||
       "bg-white border border-gray-200 rounded-lg p-3 mb-3 cursor-move hover:shadow-md transition-shadow group",
@@ -13,7 +12,12 @@ const JiraCard = ({ className, rootClassName, card, columnId, deleteCard }) => {
   const { type, id, title, priority, storyPoints, assignee, labels } = card;
   const cardTypeColor = getCardTypeColor(type);
   return (
-    <div className={classes}>
+    <div
+      role="button"
+      className={classes}
+      draggable
+      onDragStart={(e) => handleDragStart(e, card, columnId)}
+    >
       <div className="flex items-start justify-between mb-2">
         <span
           className={`inline-block px-2 py-1 rounded text-xs font-medium border ${cardTypeColor}`}

@@ -8,6 +8,7 @@ import {
   STORY_CARD,
   TASK_CARD
 } from "../../constants/board.constants";
+import { useCardDragger } from "../../hooks/ui/useCardDragger";
 
 const DRAFT_COLUMNS = {
   "PROJ-101-0": {
@@ -87,6 +88,7 @@ const DRAFT_COLUMNS = {
 
 const BoardPage = (props) => {
   const [columns, setColumns] = useState(DRAFT_COLUMNS);
+  const { handleDragStart, handleDragOver, handleDrop } = useCardDragger({ setColumns });
 
   return (
     <div className="min-h-screen bg-gray-50 min-w-screen">
@@ -94,7 +96,15 @@ const BoardPage = (props) => {
       <div className="p-6">
         <div className="flex space-x-6 overflow-x-auto pb-6">
           {Object.values(columns).map((column) => {
-            return <Column key={column.id} columnData={column} />;
+            return (
+              <Column
+                key={column.id}
+                columnData={column}
+                handleDragStart={handleDragStart}
+                handleDragOver={handleDragOver}
+                handleDrop={handleDrop}
+              />
+            );
           })}
         </div>
       </div>
