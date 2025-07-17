@@ -19,7 +19,7 @@ const Topbar = (props) => {
         </div>
         <button
           onClick={() => setShowNewColumnForm(true)}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer"
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Column

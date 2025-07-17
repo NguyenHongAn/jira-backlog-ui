@@ -1,9 +1,9 @@
+import React from "react";
 import classNames from "classnames";
 import { Plus, X } from "lucide-react";
-import React from "react";
+import JiraCard from "../JiraCard/JiraCard";
 
-const Column = (props) => {
-  const { columnData, className, rootClassName, setShowNewCardFormOpen, deleteColumn } = props;
+const Column = ({ columnData, className, rootClassName, setShowNewCardFormOpen, deleteColumn }) => {
   const classes = classNames(rootClassName || "flex-shrink-0 min-w-80", className);
   const { id, color, title, cards } = columnData;
 
@@ -22,13 +22,13 @@ const Column = (props) => {
             <div className="flex items-center space-x-1">
               <button
                 onClick={() => setShowNewCardFormOpen(id)}
-                className="text-gray-600 hover:text-blue-600 p-1"
+                className="text-gray-600 hover:text-blue-600 p-1 cursor-pointer"
               >
                 <Plus className="w-4 h-4" />
               </button>
               <button
                 onClick={() => deleteColumn(id)}
-                className="text-gray-600 hover:text-red-600 p-1"
+                className="text-gray-600 hover:text-red-600 p-1 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -37,7 +37,7 @@ const Column = (props) => {
         </div>
         <div className="p-4 min-h-[400px] bg-gray-50">
           {cards.map((card) => (
-            <div key={card.id} card={card} columnId={id} className="h-20 w-20 bg-red-200" />
+            <JiraCard key={card.id} card={card} columnId={id} />
           ))}
           {cards.length === 0 && (
             <div className="text-center text-gray-500 py-8">

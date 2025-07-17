@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import Topbar from "../../components/Topbar/Topbar";
 import Column from "../../components/Column/Column";
+import {
+  BUG_CARD,
+  PRIORITY_HIGH,
+  PRIORITY_MEDIUM,
+  STORY_CARD,
+  TASK_CARD
+} from "../../constants/board.constants";
 
 const DRAFT_COLUMNS = {
   "PROJ-101-0": {
@@ -11,8 +18,8 @@ const DRAFT_COLUMNS = {
       {
         id: "PROJ-101-0-CARD-0",
         title: "Implement user authentication",
-        type: "Story",
-        priority: "High",
+        type: STORY_CARD,
+        priority: PRIORITY_HIGH,
         assignee: "John Doe",
         storyPoints: 8,
         labels: ["Backend", "Security"]
@@ -20,8 +27,8 @@ const DRAFT_COLUMNS = {
       {
         id: "PROJ-101-0-CARD-1",
         title: "Fix login page styling",
-        type: "Bug",
-        priority: "Medium",
+        type: BUG_CARD,
+        priority: PRIORITY_MEDIUM,
         assignee: "Jane Smith",
         storyPoints: 3,
         labels: ["Frontend", "UI"]
@@ -36,8 +43,8 @@ const DRAFT_COLUMNS = {
       {
         id: "PROJ-101-1-CARD-0",
         title: "Create dashboard layout",
-        type: "Task",
-        priority: "High",
+        type: TASK_CARD,
+        priority: PRIORITY_HIGH,
         assignee: "Mike Johnson",
         storyPoints: 5,
         labels: ["Frontend", "Design"]
@@ -52,8 +59,8 @@ const DRAFT_COLUMNS = {
       {
         id: "PROJ-101-2-CARD-0",
         title: "Test API endpoints",
-        type: "Task",
-        priority: "Medium",
+        type: TASK_CARD,
+        priority: PRIORITY_MEDIUM,
         assignee: "Sarah Wilson",
         storyPoints: 3,
         labels: ["Testing", "API"]
@@ -68,8 +75,8 @@ const DRAFT_COLUMNS = {
       {
         id: "PROJ-101-3-CARD-0",
         title: "Setup project structure",
-        type: "Task",
-        priority: "High",
+        type: TASK_CARD,
+        priority: PRIORITY_HIGH,
         assignee: "Alex Brown",
         storyPoints: 2,
         labels: ["Setup", "Infrastructure"]
@@ -80,7 +87,6 @@ const DRAFT_COLUMNS = {
 
 const BoardPage = (props) => {
   const [columns, setColumns] = useState(DRAFT_COLUMNS);
-  const [showNewCardFormOpen, setShowNewCardFormOpen] = useState(null);
 
   return (
     <div className="min-h-screen bg-gray-50 min-w-screen">
@@ -88,13 +94,7 @@ const BoardPage = (props) => {
       <div className="p-6">
         <div className="flex space-x-6 overflow-x-auto pb-6">
           {Object.values(columns).map((column) => {
-            return (
-              <Column
-                key={column.id}
-                columnData={column}
-                setShowNewCardFormOpen={setShowNewCardFormOpen}
-              />
-            );
+            return <Column key={column.id} columnData={column} />;
           })}
         </div>
       </div>
