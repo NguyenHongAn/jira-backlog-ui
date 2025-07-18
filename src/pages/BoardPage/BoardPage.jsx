@@ -9,6 +9,8 @@ import {
   TASK_CARD
 } from "../../constants/board.constants";
 import { useCardDragger } from "../../hooks/ui/useCardDragger";
+import { useColumnHandler } from "../../hooks/ui/useColumnHandler";
+import NewColumnForm from "../../components/NewColumnForm/NewColumnForm";
 
 const DRAFT_COLUMNS = {
   "PROJ-101-0": {
@@ -88,13 +90,22 @@ const DRAFT_COLUMNS = {
 
 const BoardPage = (props) => {
   const [columns, setColumns] = useState(DRAFT_COLUMNS);
+  const [showNewColumnForm, setShowNewColumnForm] = useState(false);
+  const [newColumnTitle, setNewColumnTitle] = useState("");
+  // Hooks
   const { handleDragStart, handleDragOver, handleDrop } = useCardDragger({ setColumns });
-
+  const { addNewColumn, deleteColumn } = useColumnHandler({
+    setColumns,
+    newColumnTitle,
+    columns,
+    setNewColumnTitle,
+    setShowNewColumnForm
+  });
   return (
-    <div className="min-h-screen bg-gray-50 min-w-screen">
-      <Topbar />
-      <div className="p-6">
-        <div className="flex space-x-6 overflow-x-auto pb-6">
+    <div className="min-h-screen bg-gray-50 ">
+      <Topbar setShowNewColumnForm={setShowNewColumnForm} />
+      <div className="p-6 ">
+        <div className="flex space-x-6 overflow-x-auto pb-6 min-h-screen">
           {Object.values(columns).map((column) => {
             return (
               <Column
@@ -103,9 +114,18 @@ const BoardPage = (props) => {
                 handleDragStart={handleDragStart}
                 handleDragOver={handleDragOver}
                 handleDrop={handleDrop}
+                deleteColumn={deleteColumn}
               />
             );
           })}
+          {showNewColumnForm && (
+            <NewColumnForm
+              setShowNewColumnForm={setShowNewColumnForm}
+              newColumnTitle={newColumnTitle}
+              setNewColumnTitle={setNewColumnTitle}
+              addNewColumn={addNewColumn}
+            />
+          )}
         </div>
       </div>
     </div>
