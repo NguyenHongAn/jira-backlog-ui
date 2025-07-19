@@ -7,6 +7,7 @@ import {
   STORY_CARD,
   TASK_CARD
 } from "../constants/board.constants";
+import { WIDGET_CONTAINER } from "../constants/widget.constants";
 
 export const getCardTypeColor = (type) => {
   {
