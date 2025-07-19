@@ -1,7 +1,12 @@
 import { createContext, useCallback, useContext } from "react";
 
 export const WidgetContext = createContext({
-  addWidget: () => {}
+  addWidget: () => {},
+  showWidgetSelector: false,
+  setShowWidgetSelector: () => {},
+  removeWidget: () => {},
+  resetDashboard: () => {},
+  displayWidgets: []
 });
 
 export default function useWidgetContext() {

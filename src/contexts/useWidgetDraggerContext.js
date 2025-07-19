@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext } from "react";
 
 export const WidgetDraggerContext = createContext({
   handleDragStart: () => {},
-  handleDragEnd: () => {}
+  handleDrop: () => {}
 });
 
 export default function useWidgetDraggerContext() {

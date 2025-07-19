@@ -1,13 +1,14 @@
-import { createContext, useCallback, useState } from "react";
-import useWidgetDraggerContext from "../../contexts/useWidgetDraggerContext";
+import { useCallback, useState } from "react";
 import { WidgetContext } from "../../contexts/useWidgetContext";
-import { WIDGET_CONTAINER } from "../../constants/widget.constants";
 
 const WidgetProvider = ({ widgetTemplates, children }) => {
-  const [displayWidgets, setDisplayWidgets] = useState([]);
+  const [displayWidgets, setDisplayWidgets] = useState([
+    { id: `widget-weather-${0}`, type: "weather", title: "Weather" },
+    { id: `widget-counter-${1}`, type: "counter", title: "Counter" },
+    { id: `widget-infoCard-${2}`, type: "infoCard", title: "Info Card" }
+  ]);
   const [widgetCount, setWidgetCount] = useState(0);
   const [showWidgetSelector, setShowWidgetSelector] = useState(false);
-  const { handleDragStart, handleDragEnd } = useWidgetDraggerContext({ widgetTemplates });
 
   const addWidget = useCallback(
     (widgetKey) => {
@@ -23,7 +24,7 @@ const WidgetProvider = ({ widgetTemplates, children }) => {
       };
 
       setDisplayWidgets((prev) => [...prev, widget]);
-      setWidgetCount(widgetCount + 1);
+      setWidgetCount((prevCount) => prevCount + 1);
       // Hide widget selector after adding
       setShowWidgetSelector(false);
     },
@@ -49,7 +50,8 @@ const WidgetProvider = ({ widgetTemplates, children }) => {
         setShowWidgetSelector,
         removeWidget,
         resetDashboard,
-        displayWidgets
+        displayWidgets,
+        setDisplayWidgets
       }}
     >
       {children}

@@ -7,6 +7,7 @@ import {
 } from "../../components/Widget/Widget";
 import WidgetControl from "../../components/WidgetControl/WidgetControl";
 import WidgetProvider from "../../components/WidgetProvider/WidgetProvider";
+import WidgetDraggerProvider from "../../components/WidgetDraggerProvider/WidgetDraggerProvider";
 import useWidgetContext from "../../contexts/useWidgetContext";
 import { WIDGET_CONTAINER, WIDGET_TYPES } from "../../constants/widget.constants";
 
@@ -42,25 +43,20 @@ const WIDGET_TEMPLATES = {
 };
 
 const WidgetPage = ({ widgetTemplates }) => {
-  const { removeWidget, displayWidgets } = useWidgetContext({
-    widgetTemplates
-  });
+  const { displayWidgets } = useWidgetContext();
+
   return (
     <div className="bg-gradient-to-br from-blue-500 to-purple-500 min-w-screen min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        <WidgetControl widgetTemplates={WIDGET_TEMPLATES} />
+      <div className=" mx-auto">
+        <WidgetControl widgetTemplates={widgetTemplates} />
       </div>
+
       <div
         id={WIDGET_CONTAINER}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
       >
         {displayWidgets.map((widget) => (
-          <WidgetWrapper
-            key={widget.id}
-            widget={widget}
-            onRemoveWidget={removeWidget}
-            widgetTemplates={WIDGET_TEMPLATES}
-          />
+          <WidgetWrapper key={widget.id} widget={widget} widgetTemplates={widgetTemplates} />
         ))}
       </div>
     </div>
@@ -68,6 +64,10 @@ const WidgetPage = ({ widgetTemplates }) => {
 };
 
 const EnhancedWidgetPage = () => (
-  <WidgetProvider widgetTemplates={WIDGET_TEMPLATES}>{<WidgetPage />}</WidgetProvider>
+  <WidgetProvider widgetTemplates={WIDGET_TEMPLATES}>
+    <WidgetDraggerProvider>
+      {<WidgetPage widgetTemplates={WIDGET_TEMPLATES} />}
+    </WidgetDraggerProvider>
+  </WidgetProvider>
 );
 export default EnhancedWidgetPage;
